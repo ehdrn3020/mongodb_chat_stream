@@ -17,4 +17,4 @@ db.chat_messages.aggregate([
   {$match:{ rnk: {$lte: 3} }},         // 상위 3개
   {$project:{_id:0, room:1, hour:1, word:1, count:1, rnk:1}},
   {$sort:{room:1, hour:1, rnk:1}}
-])
+]).forEach(doc => printjson(doc))

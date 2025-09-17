@@ -14,4 +14,4 @@ db.chat_messages.aggregate([
   {$group:{_id:{room:"$roomId", hour:"$hour", word:"$words"}, count:{$sum:1}}},
   {$sort: {count:-1}},
   {$limit: 20}
-])
+]).forEach(doc => printjson(doc))
