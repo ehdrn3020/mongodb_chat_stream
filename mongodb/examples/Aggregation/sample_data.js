@@ -1,4 +1,4 @@
-db = db.use('chatdb');
+db = db.getSiblingDB('chatdb');
 db.dropDatabase();
 
 db.users.insertMany([
