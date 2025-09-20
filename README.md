@@ -17,3 +17,8 @@ MongoDB 기반 실시간 채팅 스트리밍
   - chat_word_stats (시간당 단어 통계 결과 저장)
   - alert_keywords (알림 키워드 목록, 선택: MySQL CDC로 동기화)
   - alerts (발생 알림 기록, TTL로 자동 정리)
+
+# 프로젝트 구조
+-mongodb
+    - examples
+      - Aggregation : js파일을 통해 집계 테스트 
