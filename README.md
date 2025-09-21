@@ -19,6 +19,6 @@ MongoDB 기반 실시간 채팅 스트리밍
   - alerts (발생 알림 기록, TTL로 자동 정리)
 
 # 프로젝트 구조
--mongodb
-    - examples
-      - Aggregation : js파일을 통해 집계 테스트 
+- mongodb 
+  - examples 
+    - Aggregation : js파일을 통해 집계 테스트 
