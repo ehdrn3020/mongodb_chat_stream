@@ -124,19 +124,34 @@ sudo dnf install -y docker
 sudo systemctl enable --now docker
 sudo usermod -aG docker $USER   # 현재 유저를 docker 그룹에 추가(재로그인 필요)
 
+# 도커 컴포즈 설치
+VER=v2.29.2   # 원하면 최신으로 바꿔도 됨
+
+sudo mkdir -p /usr/libexec/docker/cli-plugins
+sudo curl -SL \
+  https://github.com/docker/compose/releases/download/$VER/docker-compose-linux-x86_64 \
+  -o /usr/libexec/docker/cli-plugins/docker-compose
+sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose
+
+docker compose version
+
 # 컨테이너 설치
+cd mongodb_chat_stream/sqlserver/
+mkdir -p ./data ./backup
+sudo chmod -R 777 ./data ./backup
+
 docker compose up -d
 
 # 컨테이너 안 접속 테스트
-docker exec -it mssql2019 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'YourStrong!Passw0rd'
-> SELECT @@VERSION; GO
+docker exec -it mssql2019 /bin/bash
+/opt/mssql-tools18/bin/sqlcmd -S localhost,1433 -U SA -P 'mystrongpassword!' -C -Q "SELECT @@VERSION"
+1> SELECT name FROM sys.databases ORDER BY name;
+2> GO
 
 # SQL Agent 로그 확인
+docker logs --tail=200 mssql2019
 docker exec -it mssql2019 bash -lc 'tail -n 100 /var/opt/mssql/log/sqlagent.out'
 
-# 재시작/로그/정지/삭제
-docker logs -f mssql2019
-docker restart mssql2019
-docker stop mssql2019
-docker rm -f mssql2019
+# 컨테이너 정지
+docker compose down
 ```
