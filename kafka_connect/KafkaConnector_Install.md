@@ -59,6 +59,13 @@ PATH=/usr/lib/jvm/java-11-amazon-corretto.x86_64/bin:$PATH \
 
 # 플러그인 목록 확인
 curl -s http://server_1:8083/connector-plugins | jq
+[
+  {
+    "class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "type": "source",
+    "version": "2.5.4.Final"
+  },...
+]
 
 # 또는 
 curl -s http://server_1:8083/connector-plugins | grep -i sqlserver
@@ -85,5 +92,4 @@ curl -s http://server_1:8083/connector-plugins | grep -i sqlserver
                      ▼                        ▼                        ▼
             Data change topics        Schema history topic     Txn metadata topic
          <srv>.<sch>.<tbl>           schema-changes.<srv>        tx-meta.<srv>
-
 ```

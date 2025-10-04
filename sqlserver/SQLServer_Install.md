@@ -152,6 +152,7 @@ docker exec -it mssql2019 /bin/bash
 docker logs --tail=200 mssql2019
 docker exec -it mssql2019 bash -lc 'tail -n 100 /var/opt/mssql/log/sqlagent.out'
 
-# 컨테이너 정지
+# 컨테이너 시작 정지
+docker start mssql2019
 docker compose down
 ```
