@@ -11,21 +11,13 @@
 
     "database.names": "DemoCdcDB",
     "topic.prefix": "mssql",
-
-    // 캡처 테이블 한정(권장: DB명까지 fully-qualified)
     "table.include.list": "DemoCdcDB.dbo.Users",
 
-    // 스냅샷 전략: 최초 1회 전체 + CDC 이어붙이기
     "snapshot.mode": "initial",
-
-    // DDL(스키마 변경) 이벤트 포함 여부
     "include.schema.changes": "true",
-
-    // 스키마 히스토리 저장 (Debezium 2.x 방식)
     "schema.history.internal.kafka.bootstrap.servers": "localhost:9092",
     "schema.history.internal.kafka.topic": "schemahistory.mssql_demo",
 
-    // 성능/정합 보강(옵션)
     "max.batch.size": "2048",
     "max.queue.size": "8192",
     "poll.interval.ms": "3000"
