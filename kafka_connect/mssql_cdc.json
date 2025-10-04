@@ -4,7 +4,7 @@
     "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
     "tasks.max": "1",
 
-    "database.hostname": "server_2",
+    "database.hostname": "172.31.4.163",
     "database.port": "1433",
     "database.user": "sa",
     "database.password": "mystrongpassword!",
