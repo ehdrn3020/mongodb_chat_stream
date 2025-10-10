@@ -19,6 +19,23 @@ tar xzf confluent-7.9.1.tar.gz
 - https://www.confluent.io/hub/
 
 
+## Kafka Config ( 선택 - Single Broker 일 때 )
+```aiignore
+# kafka/config/server.properties 파일 아래 내용으로 수정
+# 싱글 브로커용 필수
+offsets.topic.replication.factor=1
+offsets.topic.num.partitions=50
+
+# 트랜잭션 로그도 싱글에 맞춤(선택이지만 권장)
+transaction.state.log.replication.factor=1
+transaction.state.log.min.isr=1
+
+# (선택) 자동생성 켜두고 싶으면
+# auto.create.topics.enable=true
+
+```
+
+
 ## Source Connect
 ### SQL Server Source 설치
 ```aiignore
