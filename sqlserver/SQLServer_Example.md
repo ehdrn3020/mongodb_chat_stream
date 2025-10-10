@@ -29,9 +29,12 @@ EXEC sys.sp_cdc_enable_table
      @role_name     = N'cdc_reader',
      @supports_net_changes = 1;
 
-# 생성 확인
+# cdc 아래 메타데이터 및 변경 테이블들 생성 확인
+## 추적 중인 컬럼 목록
+SELECT * FROM cdc.captured_columns
 SELECT * FROM cdc.change_tables;
-SELECT * FROM cdc.captured_columns;
+SELECT * FROM cdc.index_columns
+SELECT * FROM cdc.dbo_Users_CT;
 
 # CDC 적용 확인
 INSERT INTO dbo.Users(UserID, Email, DisplayName) VALUES (3,'bbb@example.com','BOB');
