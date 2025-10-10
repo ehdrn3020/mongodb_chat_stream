@@ -42,7 +42,7 @@ ls ./confluent-7.9.1/share/confluent-hub-components/debezium-debezium-connector-
 ## Kafka Connector
 ### Connector Path 설정
 ```aiignore
-vi ./confluent-7.9.1/etc/kafka/connect-distributed.properties
+vi /rnd/connector_kafka/confluent-7.9.1/etc/kafka/connect-distributed.properties
 
 # 여러 경로를 쉼표(,)로 구분
 plugin.path=/usr/share/java,/rnd/connector_kafka/confluent-7.9.1/share/confluent-hub-components
