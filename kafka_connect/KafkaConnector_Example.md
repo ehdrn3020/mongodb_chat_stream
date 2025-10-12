@@ -1,4 +1,4 @@
-# 커넥터 생성
+## MSSQL 커넥터 생성
 ```aiignore
 # 커넥터 추가
 curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb_chat_stream/kafka_connect/mssql_cdc.json http://localhost:8083/connectors | jq
@@ -43,4 +43,52 @@ curl -s http://server_1:8083/connectors/mssql-cdc-users/status | jq
   ],
   "type": "source"
 }
+```
+
+## CDC 확인
+```aiignore
+# DemoCdcDB.dbo.Users 의 row update 실행
+update 작업 실행
+
+# topic message 확인
+/rnd/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server localhost:9092 \
+--topic mssql.DemoCdcDB.dbo.Users \
+--from-beginning
+
+>>>
+...
+"payload": {
+    "before": {
+      "UserID": 5,
+      "Email": "ddd@example.com",
+      "DisplayName": "Demo",
+      "IsActive": true,
+      "UpdatedAt": 1760274065380
+    },
+    "after": {
+      "UserID": 5,
+      "Email": "ddd@example.com",
+      "DisplayName": "Demo2",
+      "IsActive": true,
+      "UpdatedAt": 1760274065380
+    },
+    "source": {
+      "version": "2.5.4.Final",
+      "connector": "sqlserver",
+      "name": "mssql",
+      "ts_ms": 1760274622437,
+      "snapshot": "false",
+      "db": "DemoCdcDB",
+      "sequence": null,
+      "schema": "dbo",
+      "table": "Users",
+      "change_lsn": "00000030:00000e48:0002",
+      "commit_lsn": "00000030:00000e48:0003",
+      "event_serial_no": 2
+    },
+    "op": "u",
+    "ts_ms": 1760274626610,
+    "transaction": null
+  }
 ```
