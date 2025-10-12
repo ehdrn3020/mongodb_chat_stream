@@ -1,22 +1,17 @@
 {
-    "name": "mssql-cdc-users",
-    "config": {
-        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
-        "database.hostname": "172.31.4.163",
-        "database.port": "1433",
-        "database.user": "sa",
-        "database.password": "mystrongpassword!",
-        "database.names": "DemoCdcDB",
-        "topic.prefix": "mssql",
-        "table.include.list": "DemoCdcDB.dbo.Users",
-        "schema.history.internal.kafka.bootstrap.servers": "172.31.0.206:9092",
-        "schema.history.internal.kafka.topic": "schemahistory.mssql_demo",
-        "database.encrypt": "false",
-
-        "snapshot.mode": "initial",
-        "include.schema.changes": "true",
-        "max.batch.size": "2048",
-        "max.queue.size": "8192",
-        "poll.interval.ms": "3000"
-    }
+  "name": "mssql-cdc-users",
+  "config": {
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "database.hostname": "server_2",
+    "database.port": "1433",
+    "database.user": "sa",
+    "database.password": "mystrongpassword!",
+    "database.names": "DemoCdcDB",
+    "topic.prefix": "mssql",
+    "table.include.list": "dbo.Users",
+    "schema.history.internal.kafka.bootstrap.servers": "server_1:9092",
+    "schema.history.internal.kafka.topic": "schemahistory.mssql_demo",
+    "database.encrypt": "false",
+    "name": "mssql-cdc-users"
+  }
 }
