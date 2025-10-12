@@ -13,7 +13,7 @@ curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb
     "database.password": "mystrongpassword!",
     "database.names": "DemoCdcDB",
     "topic.prefix": "mssql",
-    "table.include.list": "DemoCdcDB.dbo.Users",
+    "table.include.list": "dbo.Users",
     "schema.history.internal.kafka.bootstrap.servers": "server_1:9092",
     "schema.history.internal.kafka.topic": "schemahistory.mssql_demo",
     "database.encrypt": "false",
@@ -22,6 +22,9 @@ curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb
   "tasks": [],
   "type": "source"
 }
+
+# 커넥터 삭제
+curl -s -X DELETE http://localhost:8083/connectors/mssql-cdc-users | jq
 
 # 상태 확인
 curl -s http://server_1:8083/connectors/mssql-cdc-users/status | jq
