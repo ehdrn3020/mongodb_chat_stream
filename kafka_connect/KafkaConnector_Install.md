@@ -40,10 +40,10 @@ transaction.state.log.min.isr=1
 ### SQL Server Source 설치
 ```aiignore
 # Debezium SQL Server Source 설치
-./confluent-7.9.1/bin/confluent-hub install debezium/debezium-connector-sqlserver:2.5.4
+/rnd/connector_kafka/confluent-7.9.1/bin/confluent-hub install debezium/debezium-connector-sqlserver:2.5.4
 
 # 설치 확인
-ls ./confluent-7.9.1/share/confluent-hub-components/debezium-debezium-connector-sqlserver/
+ls /rnd/connector_kafka/confluent-7.9.1/share/confluent-hub-components/debezium-debezium-connector-sqlserver/
 
 # JAVA Version과 SQL Server Connector
 - Debezium SQL Server Connector(2.7.x)는 Java 11
@@ -86,6 +86,13 @@ curl -s http://server_1:8083/connector-plugins | jq
 
 # 또는 
 curl -s http://server_1:8083/connector-plugins | grep -i sqlserver
+
+# 생성 토픽 확인
+/rnd/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+>>>
+connect-configs : 모든 커넥터와 태스크의 구성(Configuration) 정보를 저장
+connect-offsets : Source 커넥터의 데이터 처리 진행 상황(Offset)을 저장
+connect-status : 커넥터와 태스크의 현재 런타임 상태(Status)를 저장
 ```
 
 ### 동작 개요
