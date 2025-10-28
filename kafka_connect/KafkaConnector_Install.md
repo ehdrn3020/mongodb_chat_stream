@@ -32,7 +32,6 @@ transaction.state.log.min.isr=1
 
 # (선택) 자동생성 켜두고 싶으면
 # auto.create.topics.enable=true
-
 ```
 
 
@@ -61,6 +60,10 @@ ls /rnd/connector_kafka/confluent-7.9.1/share/confluent-hub-components/debezium-
 ```aiignore
 vi /rnd/connector_kafka/confluent-7.9.1/etc/kafka/connect-distributed.properties
 
+# kafka cluster에 맞게 아래 정보 수정
+bootstrap.servers
+group.id
+
 # 여러 경로를 쉼표(,)로 구분
 plugin.path=/usr/share/java,/rnd/connector_kafka/confluent-7.9.1/share/confluent-hub-components
 ```
@@ -73,6 +76,9 @@ JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64 \
 PATH=/usr/lib/jvm/java-11-amazon-corretto.x86_64/bin:$PATH \
 /rnd/connector_kafka/confluent-7.9.1/bin/connect-distributed \
 /rnd/connector_kafka/confluent-7.9.1/etc/kafka/connect-distributed.properties
+
+# Connector 실행 확인
+curl http://server_1:8083/connectors
 
 # 플러그인 목록 확인
 curl -s http://server_1:8083/connector-plugins | jq

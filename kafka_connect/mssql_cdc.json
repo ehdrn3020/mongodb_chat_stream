@@ -11,7 +11,6 @@
     "table.include.list": "dbo.Users",
     "schema.history.internal.kafka.bootstrap.servers": "server_1:9092",
     "schema.history.internal.kafka.topic": "schemahistory.mssql_demo",
-    "database.encrypt": "false",
-    "name": "mssql-cdc-users"
+    "database.encrypt": "false"
   }
 }

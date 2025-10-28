@@ -1,4 +1,4 @@
-## MSSQL 커넥터 생성
+## MSSQL Connector
 ```aiignore
 # 커넥터 추가
 curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb_chat_stream/kafka_connect/mssql_cdc.json http://localhost:8083/connectors | jq
@@ -26,6 +26,9 @@ curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb
 # 커넥터 삭제
 curl -s -X DELETE http://localhost:8083/connectors/mssql-cdc-users | jq
 
+# 커넥터 재실행
+curl -s -X POST http://localhost:8083/connectors/mssql-cdc-users/restart
+
 # 상태 확인
 curl -s http://server_1:8083/connectors/mssql-cdc-users/status | jq
 {
@@ -43,9 +46,12 @@ curl -s http://server_1:8083/connectors/mssql-cdc-users/status | jq
   ],
   "type": "source"
 }
+
+# 커넥터가 바라보는 토픽 확인
+curl -s http://server_1:8083/connectors/mssql-cdc-users/topics | jq
 ```
 
-## CDC 확인
+### CDC 확인
 ```aiignore
 # DemoCdcDB.dbo.Users 의 row update 실행
 update 작업 실행
@@ -91,4 +97,9 @@ update 작업 실행
     "ts_ms": 1760274626610,
     "transaction": null
   }
+```
+
+## Mysql Connector
+```aiignore
+
 ```
