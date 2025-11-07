@@ -1,0 +1,23 @@
+{
+  "name": "mariadb-cdc-live",
+  "config": {
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "database.hostname": "<mariadb-host>",
+    "database.port": "3306",
+    "database.user": "root",
+    "database.password": "mystrongpassword!",
+
+    "database.server.id": "54011",
+    "topic.prefix": "mariadb",
+    "database.include.list": "my_database_name",
+    "table.include.list": "my_database_name.my_tbl",
+    "snapshot.mode": "initial",
+
+    "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+    "schema.history.internal.kafka.topic": "schemahistory.mariadb",
+    "include.schema.changes": "false",
+
+    "decimal.handling.mode": "precise",
+    "time.precision.mode": "connect"
+  }
+}
