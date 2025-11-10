@@ -1,6 +1,6 @@
 ## MSSQL Connector
+### 커넥터 추가
 ```aiignore
-# 커넥터 추가
 curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb_chat_stream/kafka_connect/mssql_cdc.json http://localhost:8083/connectors | jq
 >>>
 {
@@ -98,8 +98,56 @@ update 작업 실행
     "transaction": null
   }
 ```
+--- 
 
 ## Mysql Connector
+### 커넥터 추가
 ```aiignore
+# 실행
+curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb_chat_stream/kafka_connect/mariadb_cdc.json http://localhost:8083/connectors | jq
 
+# 확인
+curl -s http://aflxszdev6:8083/connectors/mariadb-cdc-live/status | jq
+{
+  "name": "mariadb-cdc-live",
+  "connector": {
+    "state": "RUNNING",
+    "worker_id": "172.16.20.38:8083"
+  },
+  "tasks": [
+    {
+      "id": 0,
+      "state": "RUNNING",
+      "worker_id": "172.16.20.38:8083"
+    }
+  ],
+  "type": "source"
+}
+
+# 바라보는 토픽
+curl -s http://aflxszdev6:8083/connectors/mariadb-cdc-live/topics | jq
+```
+
+### CDC 확인
+```aiignore
+# 토픽 생성 확인
+/rnd/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+
+# 커넥터 삭제
+curl -s -X DELETE http://localhost:8083/connectors/mariadb-cdc-live | jq
+
+# 커넥터 재실행
+curl -s -X POST http://localhost:8083/connectors/mariadb-cdc-live/restart
+
+
+/rnd/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server localhost:9092 \
+--topic mssql.DemoCdcDB.dbo.Users \
+--from-beginning
+
+
+/rnd/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server localhost:9092 \
+--topic mssql.DemoCdcDB.dbo.Users \
+--from-beginning
 ```

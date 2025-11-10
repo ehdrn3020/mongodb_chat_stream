@@ -55,6 +55,17 @@ ls /rnd/connector_kafka/confluent-7.9.1/share/confluent-hub-components/debezium-
 - https://debezium.io/documentation/reference/3.2/connectors/sqlserver.html#sqlserver-topic-names
 
 
+### MariaDB Source 설치
+```aiignore
+curl -LO https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.5.4.Final/debezium-connector-mysql-2.5.4.Final-plugin.tar.gz
+tar -xzf debezium-connector-mysql-2.5.4.Final-plugin.tar.gz -C /rnd/connector_kafka/plugins
+
+# 설치 확인
+ll /rnd/connector_kafka/plugins/
+>>> debezium-connector-mysql
+```
+
+
 ## Kafka Connector
 ### Connector Path 설정
 ```aiignore
@@ -66,6 +77,9 @@ group.id
 
 # 여러 경로를 쉼표(,)로 구분
 plugin.path=/usr/share/java,/rnd/connector_kafka/confluent-7.9.1/share/confluent-hub-components
+
+# The server time zone value 'KST' 에러 일경우
+SET GLOBAL time_zone = '+09:00';
 ```
 
 ### 실행
