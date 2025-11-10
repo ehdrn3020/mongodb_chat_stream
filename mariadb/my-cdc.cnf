@@ -5,4 +5,5 @@ binlog_format=ROW
 binlog_row_image=FULL
 expire_logs_days=7
 gtid_strict_mode=ON # GTID 모드 사용
+log_slave_updates=ON # Slave 서버에도 GTID 모드 사용
 # binlog_rows_query_log_events=ON # query의 원본도 확인하고 싶을 때
