@@ -107,7 +107,7 @@ update 작업 실행
 curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb_chat_stream/kafka_connect/mariadb_cdc.json http://localhost:8083/connectors | jq
 
 # 확인
-curl -s http://aflxszdev6:8083/connectors/mariadb-cdc-live/status | jq
+curl -s http://localhost:8083/connectors/mariadb-cdc-live/status | jq
 {
   "name": "mariadb-cdc-live",
   "connector": {
@@ -125,7 +125,10 @@ curl -s http://aflxszdev6:8083/connectors/mariadb-cdc-live/status | jq
 }
 
 # 바라보는 토픽
-curl -s http://aflxszdev6:8083/connectors/mariadb-cdc-live/topics | jq
+curl -s http://localhost:8083/connectors/mariadb-cdc-live/topics | jq
+
+# 설정파일
+curl -s http://localhost:8083/connectors/mariadb-cdc-live-v6/config | jq
 ```
 
 ### CDC 확인
@@ -133,21 +136,20 @@ curl -s http://aflxszdev6:8083/connectors/mariadb-cdc-live/topics | jq
 # 토픽 생성 확인
 /rnd/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
 
+# 커넥터 상태
+curl -s http://localhost:8083/connectors/mariadb-cdc-live/status | jq
+
 # 커넥터 삭제
 curl -s -X DELETE http://localhost:8083/connectors/mariadb-cdc-live | jq
 
 # 커넥터 재실행
 curl -s -X POST http://localhost:8083/connectors/mariadb-cdc-live/restart
 
+# 커넥터 중지
+curl -X PUT http://localhost:8083/connectors/mariadb-cdc-live/pause
 
-/rnd/kafka/bin/kafka-console-consumer.sh \
---bootstrap-server localhost:9092 \
---topic mssql.DemoCdcDB.dbo.Users \
---from-beginning
+# 커넥터 재개
+curl -X PUT http://localhost:8083/connectors/mariadb-cdc-live/resume
 
-
-/rnd/kafka/bin/kafka-console-consumer.sh \
---bootstrap-server localhost:9092 \
---topic mssql.DemoCdcDB.dbo.Users \
---from-beginning
+/rnd/dev_kafka/bin/kafka-configs.sh --bootstrap-server localhost:9092   --describe --topic mariadb.af_station_db.station_tbl --all
 ```

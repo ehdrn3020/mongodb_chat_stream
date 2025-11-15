@@ -11,6 +11,8 @@
     "topic.prefix": "mariadb",
     "database.include.list": "my_database_name",
     "table.include.list": "my_database_name.my_tbl",
+    //"column.include.list": "my_database_name.my_tbl.user_name,my_database_name.my_tbl.user_age", 특정 컬럼만 조건
+
     "snapshot.mode": "initial",
 
     "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
@@ -18,6 +20,8 @@
     "include.schema.changes": "false",
 
     "decimal.handling.mode": "precise",
-    "time.precision.mode": "connect"
+    "time.precision.mode": "connect",
+    "provide.transaction.metadata": "true",
+    "database.connectionTimeZone": "Asia/Seoul"
   }
 }
