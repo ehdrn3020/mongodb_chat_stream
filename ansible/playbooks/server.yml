@@ -1,0 +1,11 @@
+---
+- name: Deploy Kafka Connect
+  hosts: kafka_connect_server
+  serial: 1
+  gather_facts: yes
+  vars_files:
+    - ../group_vars/server/kafka_connect.yml
+  tags:
+    - kafka_connect
+  roles:
+    - kafka_connect

@@ -1,0 +1,34 @@
+# --- Version
+kafka_version: "3.7.0"
+kafka_connect_version: "7.7.1"
+kafka_connect_prefix_version: "7.7"
+
+# --- dirs ---
+base_dir: "/rnd"
+kafka_connect_root: "{{ base_dir }}/kafka_connect"
+kafka_connect_home: "{{ kafka_connect_root }}/confluent-{{ kafka_connect_version }}"
+kafka_connect_download_file: "confluent-{{ kafka_connect_version }}.tar.gz"
+kafka_connect_current: "{{ kafka_connect_root }}/default"
+
+# --- Download URL ---
+kafka_connect_download_url: "https://packages.confluent.io/archive/{{kafka_connect_prefix_version}}/confluent-{{ kafka_connect_version }}.tar.gz"
+
+# --- Port ---
+#kafka_port: 9092
+kafka_connect_port: 8083
+
+# --- User ---
+kafka_connect_user: "ec2-user"
+kafka_connect_group: "ec2-user"
+
+# --- Log ---
+kafka_log_dir: "{{ kafka_home }}/logs"
+kafka_data_dir: "{{ data_dir }}/kafka"
+
+# --- connect-distributed.properties.j2 ---
+group_id: "kafka-connect-server-cluster"
+bootstrap_servers: "{{ groups['kafka_connect_server'] | map('regex_replace', '$', ':9092') | join(',') }}"
+plugin_path:
+  - "/usr/share/java,/rnd/kafka_connect/plugins"
+  - "/rnd/kafka_connect/confluent-{{ kafka_connect_version }}/share/confluent-hub-components"
+

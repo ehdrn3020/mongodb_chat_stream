@@ -1,0 +1,53 @@
+---
+- name: Create kafka_connect directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ kafka_connect_user }}"
+    group: "{{ kafka_connect_group }}"
+    mode: '0755'
+  loop:
+    - "{{ base_dir }}"
+    - "{{ kafka_connect_root }}"
+
+- name: Check if kafka_connect is already installed
+  stat:
+    path: "{{ kafka_connect_home }}/bin/confluent"
+  register: kafka_connect_installed
+
+- name: Download and extract kafka_connect
+  block:
+    - name: Download kafka_connect
+      get_url:
+        url: "{{ kafka_connect_download_url }}"
+        dest: "{{ kafka_connect_root }}/{{kafka_connect_download_file}}"
+        mode: '0644'
+
+    - name: Extract kafka_connect
+      unarchive:
+        src: "{{ kafka_connect_root }}/{{kafka_connect_download_file}}"
+        dest: "{{ kafka_connect_root }}"
+        owner: "{{ kafka_connect_user }}"
+        group: "{{ kafka_connect_group }}"
+        remote_src: yes
+
+    - name: Ensure default file to symlink link
+      file:
+        src: "{{ kafka_connect_home }}"
+        dest: "{{ kafka_connect_current }}"
+        state: link
+        force: yes
+        owner: "{{ kafka_connect_user }}"
+        group: "{{ kafka_connect_group }}"
+        follow: false
+  when: not kafka_connect_installed.stat.exists
+
+#- name: Create kafka_connect configuration files
+#  template:
+#    src: kafka_connect-conf.yaml.j2
+#    dest: "{{ kafka_connect_home }}/conf/kafka_connect-conf.yaml"
+#    mode: '0644'
+#    owner: "{{ kafka_connect_user }}"
+#    group: "{{ kafka_connect_group }}"
+#  #    backup: yes
+#  register: kafka_connect_conf_changed
