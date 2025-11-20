@@ -23,12 +23,6 @@ curl -s -X POST -H "Content-Type: application/json" --data-binary @/root/mongodb
   "type": "source"
 }
 
-# 커넥터 삭제
-curl -s -X DELETE http://localhost:8083/connectors/mssql-cdc-users | jq
-
-# 커넥터 재실행
-curl -s -X POST http://localhost:8083/connectors/mssql-cdc-users/restart
-
 # 상태 확인
 curl -s http://server_1:8083/connectors/mssql-cdc-users/status | jq
 {
@@ -46,9 +40,6 @@ curl -s http://server_1:8083/connectors/mssql-cdc-users/status | jq
   ],
   "type": "source"
 }
-
-# 커넥터가 바라보는 토픽 확인
-curl -s http://server_1:8083/connectors/mssql-cdc-users/topics | jq
 ```
 
 ### CDC 확인
@@ -123,33 +114,28 @@ curl -s http://localhost:8083/connectors/mariadb-cdc-live/status | jq
   ],
   "type": "source"
 }
-
-# 바라보는 토픽
-curl -s http://localhost:8083/connectors/mariadb-cdc-live/topics | jq
-
-# 설정파일
-curl -s http://localhost:8083/connectors/mariadb-cdc-live-v6/config | jq
 ```
 
-### CDC 확인
+### CDC Rest API
 ```aiignore
-# 토픽 생성 확인
-/rnd/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
-
-# 커넥터 상태
-curl -s http://localhost:8083/connectors/mariadb-cdc-live/status | jq
-
-# 커넥터 삭제
-curl -s -X DELETE http://localhost:8083/connectors/mariadb-cdc-live | jq
-
-# 커넥터 재실행
-curl -s -X POST http://localhost:8083/connectors/mariadb-cdc-live/restart
-
-# 커넥터 중지
-curl -X PUT http://localhost:8083/connectors/mariadb-cdc-live/pause
-
-# 커넥터 재개
-curl -X PUT http://localhost:8083/connectors/mariadb-cdc-live/resume
+- 커넥터 생성
+    - curl -s -X POST -H "Content-Type: application/json" --data-binary @/rnd/kafka_connect/my_connect.json http://localhost:8083/connectors | jq
+- 커넥터 확인
+    - 상태 : curl -s http://localhost:8083/connectors/my_connect/status | jq
+    - 토픽 : curl -s http://localhost:8083/connectors/my_connect/topics | jq
+    - 설정 : curl -s http://localhost:8083/connectors/my_connect/config | jq
+    - 오프셋 : curl -s http://localhost:8083/connectors/my_connect/offsets | jq
+- 커넥터 삭제
+    - curl -s -X DELETE http://localhost:8083/connectors/my_connect | jq
+- 커넥터 재실행
+    - curl -s -X POST http://localhost:8083/connectors/my_connect/restart
+- 커넥터 중지 & 재개
+    - curl -X PUT http://localhost:8083/connectors/my_connect/pause
+    - curl -X PUT http://localhost:8083/connectors/my_connect/resume
+- 태스크 확인 
+    - curl -s http://localhost:8083/connectors/my_connect/tasks | jq
+    - curl -s http://localhost:8083/connectors/my_connect/tasks/0/status | jq
+- 로깅 : curl -s http://localhost:8083/connectors/admin/loggers
 
 /rnd/dev_kafka/bin/kafka-configs.sh --bootstrap-server localhost:9092   --describe --topic mariadb.af_station_db.station_tbl --all
 ```

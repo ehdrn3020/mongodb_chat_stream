@@ -22,8 +22,8 @@ kafka_connect_user: "ec2-user"
 kafka_connect_group: "ec2-user"
 
 # --- Log ---
-kafka_log_dir: "{{ kafka_home }}/logs"
-kafka_data_dir: "{{ data_dir }}/kafka"
+kafka_log_dir: "{{ kafka_connect_current }}/logs"
+kafka_data_dir: "{{ kafka_connect_current }}/data"
 
 # --- connect-distributed.properties.j2 ---
 group_id: "kafka-connect-server-cluster"

@@ -91,8 +91,11 @@ PATH=/usr/lib/jvm/java-11-amazon-corretto.x86_64/bin:$PATH \
 /rnd/connector_kafka/confluent-7.9.1/bin/connect-distributed \
 /rnd/connector_kafka/confluent-7.9.1/etc/kafka/connect-distributed.properties
 
+# 실행 커맨드
+/rnd/kafka_connect/default/bin/connect-distributed /rnd/kafka_connect/default/etc/kafka/connect-distributed.properties
+
 # Connector 실행 확인
-curl http://server_1:8083/connectors
+curl http://server1:8083/connectors
 
 # 플러그인 목록 확인
 curl -s http://server_1:8083/connector-plugins | jq
