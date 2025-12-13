@@ -1,0 +1,31 @@
+
+bootstrap.servers={{ bootstrap_servers }}
+group.id={{ group_id }}
+
+key.converter=org.apache.kafka.connect.json.JsonConverter
+value.converter=org.apache.kafka.connect.json.JsonConverter
+
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
+
+offset.storage.topic=connect-offsets
+offset.storage.replication.factor=3
+#offset.storage.partitions=25
+
+config.storage.topic=connect-configs
+config.storage.replication.factor=3
+
+status.storage.topic=connect-status
+status.storage.replication.factor=3
+#status.storage.partitions=5
+
+# Flush much faster than normal, which is useful for testing/debugging
+offset.flush.interval.ms=10000
+
+#listeners=HTTP://:8083
+#rest.advertised.host.name=
+#rest.advertised.port=
+#rest.advertised.listener=
+
+# plugin.path=/usr/local/share/java,/usr/local/share/kafka/plugins,/opt/connectors,
+plugin.path={{ plugin_path | join(',') }}

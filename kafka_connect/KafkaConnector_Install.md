@@ -57,8 +57,12 @@ ls /rnd/connector_kafka/confluent-7.9.1/share/confluent-hub-components/debezium-
 
 ### MariaDB Source 설치
 ```aiignore
+1)
 curl -LO https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.5.4.Final/debezium-connector-mysql-2.5.4.Final-plugin.tar.gz
 tar -xzf debezium-connector-mysql-2.5.4.Final-plugin.tar.gz -C /rnd/connector_kafka/plugins
+2)
+curl -LO https://repo1.maven.org/maven2/io/debezium/debezium-connector-mariadb/2.7.4.Final/debezium-connector-mariadb-2.7.4.Final-plugin.tar.gz
+tar -xzf debezium-connector-mariadb-2.7.4.Final-plugin.tar.gz -C /rnd/connector_kafka/plugins
 
 # 설치 확인
 ll /rnd/connector_kafka/plugins/
@@ -80,6 +84,9 @@ plugin.path=/usr/share/java,/rnd/connector_kafka/confluent-7.9.1/share/confluent
 
 # The server time zone value 'KST' 에러 일경우
 SET GLOBAL time_zone = '+09:00';
+
+# Java Version 11 (필요시)
+export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64/
 ```
 
 ### 실행

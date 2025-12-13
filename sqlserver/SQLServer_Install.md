@@ -125,15 +125,12 @@ sudo systemctl enable --now docker
 sudo usermod -aG docker $USER   # 현재 유저를 docker 그룹에 추가(재로그인 필요)
 
 # 도커 컴포즈 설치
-VER=v2.29.2   # 원하면 최신으로 바꿔도 됨
-
-sudo mkdir -p /usr/libexec/docker/cli-plugins
-sudo curl -SL \
-  https://github.com/docker/compose/releases/download/$VER/docker-compose-linux-x86_64 \
-  -o /usr/libexec/docker/cli-plugins/docker-compose
-sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose
-
-docker compose version
+sudo yum -y install libxcrypt-compat
+sudo curl -L \
+  https://github.com/docker/compose/releases/download/1.29.2/docker-compose-linux-x86_64 \
+  -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo docker-compose version
 
 # 컨테이너 설치
 cd mongodb_chat_stream/sqlserver/
