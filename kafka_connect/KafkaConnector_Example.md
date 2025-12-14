@@ -118,6 +118,8 @@ curl -s http://localhost:8083/connectors/mariadb-cdc-live/status | jq
 
 ### CDC Rest API
 ```aiignore
+- 플러그인 목록 확인
+    - curl -s http://server1:8083/connector-plugins | jq
 - 커넥터 생성
     - curl -s -X POST -H "Content-Type: application/json" --data-binary @/rnd/kafka_connect/my_connect.json http://localhost:8083/connectors | jq
 - 커넥터 확인
