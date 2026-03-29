@@ -1,7 +1,7 @@
 {
   "name": "mariadb-cdc-live",
   "config": {
-    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "connector.class": "io.debezium.connector.mariadb.MariaDbConnector",
     "database.hostname": "<mariadb-host>",
     "database.port": "3306",
     "database.user": "root",
@@ -20,6 +20,7 @@
 
     "decimal.handling.mode": "precise",
     "time.precision.mode": "connect",
+    "database.ssl.mode": "disabled",
     "provide.transaction.metadata": "true",
     "database.connectionTimeZone": "Asia/Seoul"
     //"tasks.max": 1 MariaDB(MySQL) 커넥터는 항상 single task이므로 tasks.max 변경 효과 없음
